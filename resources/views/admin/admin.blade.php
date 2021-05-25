@@ -11,7 +11,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped datatable yajra-datatable" style="width: 100%">
+                    <table class="table table-bordered table-hover table-striped yajra-datatable" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>Photo</th>

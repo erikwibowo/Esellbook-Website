@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AdminController;
+use App\Http\Controllers\api\DataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/admin/login', [AdminController::class, 'login'])->name('api.admin.login');
+Route::post('/data/create', [DataController::class, 'create'])->name('api.data.create');
+Route::get('/data/show', [DataController::class, 'show'])->name('api.data.show');

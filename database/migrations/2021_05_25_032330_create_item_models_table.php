@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataTable extends Migration
+class CreateItemModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('data', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
-            $table->text('text');
+            $table->string('code')->unique();
+            $table->string('item');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data');
+        Schema::dropIfExists('items');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +46,16 @@ Route::group(['prefix' => 'admin',  'middleware' => 'adminauth'], function () {
     Route::put('menu/update', [MenuController::class, 'update'])->name('admin.menu.update');
     Route::delete('menu/delete', [MenuController::class, 'delete'])->name('admin.menu.delete');
     Route::post('menu/data', [MenuController::class, 'data'])->name('admin.menu.data');
+    //Data
+    Route::get('data', [DataController::class, 'index'])->name('admin.data.index');
+    Route::post('data/create', [DataController::class, 'create'])->name('admin.data.create');
+    Route::put('data/update', [DataController::class, 'update'])->name('admin.data.update');
+    Route::delete('data/delete', [DataController::class, 'delete'])->name('admin.data.delete');
+    Route::post('data/data', [DataController::class, 'data'])->name('admin.data.data');
+    //Item
+    Route::get('item', [ItemController::class, 'index'])->name('admin.item.index');
+    Route::post('item/create', [ItemController::class, 'create'])->name('admin.item.create');
+    Route::put('item/update', [ItemController::class, 'update'])->name('admin.item.update');
+    Route::delete('item/delete', [ItemController::class, 'delete'])->name('admin.item.delete');
+    Route::post('item/data', [ItemController::class, 'data'])->name('admin.item.data');
 });
