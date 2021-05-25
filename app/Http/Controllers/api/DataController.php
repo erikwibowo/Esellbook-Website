@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Data;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,10 +27,11 @@ class DataController extends Controller
         ], 200);
     }
 
-    public function show(Request $request){
+    public function show(Request $request)
+    {
         $ar = [];
         foreach (Data::orderBy('id', 'desc')->get() as $k) {
-            $a['foto']  = asset('storage/data/'.$k->foto);
+            $a['foto']  = asset('storage/data/' . $k->foto);
             $a['text']  = $k->text;
             $a['created_at']    = date('d m Y H:i:s', strtotime($k->created_at));
             array_push($ar, $a);
@@ -38,6 +40,15 @@ class DataController extends Controller
             'success'   => true,
             'message'   => 'Success',
             'data'      => $ar
+        ], 200);
+    }
+
+    public function item(Request $request)
+    {
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Success',
+            'data'      => Item::get()
         ], 200);
     }
 }
