@@ -27,6 +27,9 @@ Route::get('admin/login', function () {
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
+
+Route::get('data/print', [DataController::class, 'print'])->name('data.print');
+
 Route::group(['prefix' => 'admin',  'middleware' => 'adminauth'], function () {
     Route::get('/', function () {
         return view('admin/dashboard', ['title' => "Dashboard"]);
@@ -48,10 +51,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'adminauth'], function () {
     Route::post('menu/data', [MenuController::class, 'data'])->name('admin.menu.data');
     //Data
     Route::get('data', [DataController::class, 'index'])->name('admin.data.index');
-    Route::post('data/create', [DataController::class, 'create'])->name('admin.data.create');
-    Route::put('data/update', [DataController::class, 'update'])->name('admin.data.update');
+    Route::get('data/print', [DataController::class, 'print'])->name('admin.data.print');
     Route::delete('data/delete', [DataController::class, 'delete'])->name('admin.data.delete');
-    Route::post('data/data', [DataController::class, 'data'])->name('admin.data.data');
     //Item
     Route::get('item', [ItemController::class, 'index'])->name('admin.item.index');
     Route::post('item/create', [ItemController::class, 'create'])->name('admin.item.create');

@@ -7,6 +7,7 @@ use App\Models\Data;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class DataController extends Controller
 {
@@ -14,6 +15,16 @@ class DataController extends Controller
         $foto = base64_decode($request->foto);
         $imageName = time() . '.jpg';
         Storage::disk('public')->put("data/" . $imageName, $foto);
+        $img = Image::make(public_path('storage/data/'. $imageName));
+        $img->text(date('d-m-Y H:i'), 710, 370, function ($font) {
+            $font->size(16);
+            $font->color('#f4d442');
+            $font->align('right');
+            $font->valign('bottom');
+            $font->angle(90);
+        });
+        $img->save(public_path('storage/data/'.$imageName));
+        
         $data = [
             'foto'          => $imageName,
             'text'          => $request->text,

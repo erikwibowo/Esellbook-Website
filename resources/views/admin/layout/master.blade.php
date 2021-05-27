@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/summernote/summernote-bs4.min.css') }}">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  {{-- Date Range Picker --}}
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <!-- jQuery -->
   <script src="{{ asset('template/admin/plugins/jquery/jquery.min.js') }}"></script>
 </head>
@@ -89,11 +91,31 @@
 <script src="{{ asset('template/admin/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('template/admin/dist/js/demo.js') }}"></script>
+{{-- Daterange picker --}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
   $('.datatable').DataTable();
+  $(".daterange").daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        },
+        ranges: {
+          'Hari Ini': [moment(), moment()],
+          'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+          '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+          'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+          'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    });
+    $('.daterange').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
 </script>
 @if(session("notif"))
 <script>

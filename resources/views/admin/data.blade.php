@@ -3,11 +3,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                {{-- <div class="card-header">
-                    <h3 class="card-title">
-                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-tambah" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus"></i> Tambah</a>
-                    </h3>
-                </div> --}}
+                <div class="card-header">
+                    <form target="_blank" action="{{ route('admin.data.print') }}" method="GET" class="d-flex">
+                        @csrf
+                        <select class="form-control mr-2" id="item" name="item">
+                            <option value="" {{ Request::input('item') == '' ? 'selected':'' }}>Semua Menu</option>
+                            @foreach ($item as $i)
+                                <option {{ Request::input('item') == $i->item ? 'selected':'' }} value="{{ $i->item }}">{{ $i->item }}</option>
+                            @endforeach
+                        </select>
+                        <input type="text" name="filter" id="filter" class="form-control daterange" value="{{ Request::input('filter') }}" placeholder="Semua Tanggal" readonly />
+                        <button type="submit" class="btn btn-primary ml-2"><i class="fas fa-print"></i></button>
+                    </form>
+                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="table-responsive">
@@ -17,6 +25,7 @@
                                 <th>#</th>
                                 <th>Foto</th>
                                 <th>Text</th>
+                                <th>Tanggal</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -28,6 +37,7 @@
                                         <img class="img img-rounded elevation-1" height="100px" src="{{ asset('storage/data/'.$i->foto) }}">
                                     </td>
                                     <td>{{ $i->text }}</td>
+                                    <td>{{ date('d-m-Y H:i', strtotime($i->created_at)) }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" data-id="{{ $i->id }}" data-name="{{ $i->id }}" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
@@ -52,6 +62,14 @@
             $("#did").val(id);
             $("#delete-data").html(name);
             $('#modal-delete').modal({backdrop: 'static', keyboard: false, show: true});
+        });
+        $("#item").on('change', function(){
+            window.location = '{{ route("admin.data.index") }}'+'?item='+$(this).val()+'&filter='+$(".daterange").val();
+        });
+        $(".daterange").on('apply.daterangepicker', function(ev, picker) {
+            let tgl = picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY');
+            $(this).val(tgl);
+            window.location = '{{ route("admin.data.index") }}'+'?item='+$('#item').val()+'&filter='+tgl;
         });
     });
 </script>
