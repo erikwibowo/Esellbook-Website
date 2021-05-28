@@ -51,7 +51,7 @@ class DataController extends Controller
     public function print(Request $request){
         $title = "Laporan semua data semua menu";
         if (isset($request->item) && isset($request->filter)) {
-            $filter = explode(" - ", $request->filter);
+            $filter = explode("/", $request->filter);
             $start = date("Y-m-d", strtotime($filter[0]));
             $end = date("Y-m-d", strtotime($filter[1]));
             $data = Data::orderBy('id', 'asc')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->where('text', 'like', '%'.$request->item.'%')->orderBy('id', 'asc')->get();
@@ -62,9 +62,10 @@ class DataController extends Controller
                 $title = "Laporan data '$request->item' dari tanggal " . date("d M Y", strtotime($filter[0])) . " sampai " . date("d M Y", strtotime($filter[1]));
             }
         }elseif (isset($request->filter)) {
-            $filter = explode(" - ", $request->filter);
+            $filter = explode("/", $request->filter);
             $start = date("Y-m-d", strtotime($filter[0]));
             $end = date("Y-m-d", strtotime($filter[1]));
+            // echo strtotime($filter[0]); die();
             if ($start == $end) {
                 $title = "Laporan data semua menu tanggal " . date("d M Y", strtotime($filter[0]));
             }else{
