@@ -16,11 +16,12 @@ class DataController extends Controller
         $imageName = time() . '.jpg';
         Storage::disk('public')->put("data/" . $imageName, $foto);
         $img = Image::make(public_path('storage/data/'. $imageName));
-        $img->text(date('d-m-Y H:i'), 710, 370, function ($font) {
-            $font->size(16);
+        $img->text(date('d-m-Y H:i'), 0, 0, function ($font) {
+            $font->file(public_path('font/SFMono-Bold.otf'));
+            $font->size(60);
             $font->color('#f4d442');
             $font->align('right');
-            $font->valign('bottom');
+            $font->valign('top');
             $font->angle(90);
         });
         $img->save(public_path('storage/data/'.$imageName));
